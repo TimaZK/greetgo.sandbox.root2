@@ -1,36 +1,25 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from "../http.service";
-import {PersonRecord} from "../../model/PersonRecord";
+import {ClientDisplay} from "../../model/ClientDisplay";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientListService {
-  constructor(private http: HttpService) {}
-
-  public loading: boolean = false;
-
-  public list: PersonRecord[] = [];
-
-  loadRecords(): Promise<PersonRecord[]> {
-    return this.http.get("/person/list")
-      .toPromise()
-      .then(resp => resp.body as Array<any>)
-      .then(body => body.map(r => PersonRecord.create(r)));
+  constructor(
+    private http: HttpService
+  ) {
   }
 
-  async load() {
-    try {
-
-      this.loading = true;
-      this.list = await this.loadRecords();
-      this.loading = false;
-
-    } catch (e) {
-
-      this.loading = false;
-      console.error(e);
-
-    }
+  loadRecords(): ClientDisplay[] {
+    return  <ClientDisplay[]>[
+      {id: 1, fio: 'Tima', age: 20, character: 'good', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500},
+      {id: 2, fio: 'Bimadsba', age: 20, character: 'good', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500},
+      {id: 3, fio: 'Zimadsfaa', age: 20, character: 'good', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500},
+      {id: 4, fio: 'Himasdfasa', age: 20, character: 'good', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500},
+      {id: 5, fio: 'Jiasdfasma', age: 20, character: 'good', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500},
+      {id: 6, fio: 'Kiasdfama', age: 20, character: 'good', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500},
+      {id: 7, fio: 'Limasda', age: 20, character: 'good', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500}]
   }
+
 }

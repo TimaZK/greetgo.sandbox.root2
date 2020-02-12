@@ -1,20 +1,41 @@
 table {
-  display: inline-block;
+  width: 80%;
 }
 
-table th {
-  padding: 0.5rem 0.3rem;
-  font-weight: 700;
-  border-bottom: #91a0a0 double 3px;
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }
 
-table td {
-  padding: 0.3rem;
-  border-bottom: #a5b4b4 solid 1px;
+.pagin {
+  display: flex;
+  justify-content: center;
 }
-table tr td:nth-child(1), table tr th:nth-child(1) {
-  text-align: left;
+
+th.mat-sort-header-sorted {
+  color: black;
 }
-table tr td:nth-child(2), table tr th:nth-child(2) {
-  text-align: left;
+
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 80%;
+  margin-bottom: -50px;
+}
+
+.filter {
+  display: flex;
+}
+
+.addUserButton {
+  background-color: #7038ff;
+  color: white;
+  margin-top: 30px;
 }
