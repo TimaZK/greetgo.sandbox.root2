@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
 import {Gender} from "../../model/Gender";
 import {ClientToSave} from "../../model/ClientToSave";
+import {Charm} from "../../model/Charm";
 import {Address} from "../../model/Address";
 import {Phones} from "../../model/Phones";
 
@@ -13,68 +14,90 @@ import {Phones} from "../../model/Phones";
 })
 export class AddCustomerComponent implements OnInit {
 
+  myFirstReactiveForm: FormGroup;
+
   client: ClientToSave = new ClientToSave();
   clientArr: ClientToSave[] = [];
-
-  churms: number[] = [1, 2, 3];
+  charms: Charm[] = [
+    {id: 1, name: "Kind"},
+    {id: 2, name: "Rude"},
+    {id: 3, name: "Caring"}
+  ];
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog
   ) {
   }
-  firstName: string;
-  lastName: string;
-  patronymic: string;
-  gender: number;
-  date: Date;
-  charm: number;
-  factAddress: Address = {} as Address;
-  registrAddress: Address = {} as Address;
 
   ngOnInit() {
+    this.initForm();
+  }
+
+  initForm() {
+    this.myFirstReactiveForm = this.fb.group({
+      firstName: (['', Validators.required]),
+      lastName: (['', Validators.required]),
+      patronymic: (['', Validators.required]),
+      gender: this.fb.control([Gender.MALE, Validators.required]),
+      date: this.fb.control(['', Validators.required]),
+      charm: this.fb.control(['', Validators.required]),
+      factAddress: this.fb.group( {
+        street: (['']),
+        house: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+        flat: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/))
+      }),
+      regAddress: this.fb.group({
+        street: this.fb.control([''], Validators.required),
+        house: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+        flat: this.fb.control([''],[Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+      }),
+      phonesArr: this.fb.array([]),
+    });
+  }
+
+
+  // addFriend(): void {
+  //   const phones = <FormArray>this.myFirstReactiveForm.get('phonesArr');
+  //   this.phoneForms.push(
+  //     this.fb.group({
+  //       homePhone: this.fb.control(['']),
+  //       workPhone: this.fb.control(['']),
+  //       mobilePhone: this.fb.control([''])
+  //     })
+  //   )
+  // }
+  //
+  // get phoneForms() {
+  //   return this.myFirstReactiveForm.get('phonesArr') as FormArray;
+  // }
+  //
+  // deletePhone(i) {
+  //   this.phoneForms.removeAt(i)
+  // }
+
+  saveClient() {
+    this.clientArr.push(this.myFirstReactiveForm.value);
+    console.log(this.clientArr);
   }
 
   close() {
     this.dialog.closeAll();
   }
 
-  saveClient() {
-    this.client.firstName = this.firstName;
-    this.client.lastName = this.lastName;
-    this.client.patron = this.patronymic;
-    if (this.gender == 1) {
-      this.client.gender = Gender.MALE;
-    } else {
-      this.client.gender = Gender.FEMALE;
-    }
-    this.client.birthDay = this.date;
-    for (let i = 0; i < this.churms.length; i++) {
-      if (this.charm == this.churms[0]) {
-        this.client.charm = this.charm
-      } else if (this.charm == this.churms[1]) {
-        this.client.charm = this.charm
-      } else if (this.charm == this.churms[2]) {
-        this.client.charm = this.charm
-      }
-    }
+  get firstName() {
+    return this.myFirstReactiveForm.get('firstName');
+  }
 
-    let factAddress: Address = {...this.factAddress} as Address;
-    factAddress.flat = this.factAddress.flat;
-    factAddress.house = this.factAddress.house;
-    factAddress.street = this.factAddress.street;
+  get lastName() {
+    return this.myFirstReactiveForm.get('lastName');
+  }
 
-    let registAddress: Address = {...this.registrAddress} as Address;
-    registAddress.flat = this.registrAddress.flat;
-    registAddress.house = this.registrAddress.house;
-    registAddress.street = this.registrAddress.street;
+  get patronymic() {
+    return this.myFirstReactiveForm.get('patronymic');
+  }
 
-    this.client.factAddress = factAddress;
-    this.client.regAddress = registAddress;
-
-    this.clientArr.push(this.client);
-    console.log(this.clientArr);
+  get date() {
+    return this.myFirstReactiveForm.get('date');
   }
 }
-
-

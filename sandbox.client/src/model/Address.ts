@@ -1,7 +1,7 @@
 export class Address {
   public street: string;
-  public house: string;
-  public flat: string;
+  public house: number;
+  public flat: number;
 
   public static create(a: any): Address {
     const ret = new Address();
