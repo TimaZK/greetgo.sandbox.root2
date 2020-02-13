@@ -47,3 +47,8 @@ mat-form-field {
     margin-right: 1rem !important;
   }
 }
+
+.witdhOfAddres {
+  width: 150px;
+  margin-left: 10px;
+}

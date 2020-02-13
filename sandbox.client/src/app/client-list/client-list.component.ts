@@ -47,8 +47,8 @@ export class ClientListComponent implements OnInit {
 
   openModal(): void {
     const dialogRef = this.dialog.open(AddCustomerComponent, {
-      width: '500px',
-      height: '500px'
+      width: '700px',
+      height: '700px'
     });
 
   }

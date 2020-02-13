@@ -1,93 +1,106 @@
 <div>
+
   <div class="add-title">
-    <h2 class="primary">Add customer</h2>
+    <h2 class="primary">Add user</h2>
   </div>
+
   <div>
-    <form [formGroup]="formGroup">
-      <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px">
-        <mat-grid-tile>
-          <div class="text-inside">
-            <mat-form-field>
-              <label>
-                <input matInput placeholder="First Name" value={{fname}} formControlName="firstname" required>
-              </label>
-              <mat-error *ngIf="formGroup.controls.firstname.hasError('required')">
-                Please enter first name
-              </mat-error>
-              <mat-error *ngIf="formGroup.controls.firstname.hasError('pattern')">
-                Please enter valid first name
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="text-inside">
-            <mat-form-field class="example-full-width">
-              <label>
-                <input matInput placeholder="Last Name" value={{lname}} formControlName="lastname" required>
-              </label>
-              <mat-error *ngIf="formGroup.controls.lastname.hasError('required')">
-                Please enter last name
-              </mat-error>
-              <mat-error *ngIf="formGroup.controls.lastname.hasError('pattern')">
-                Please enter valid last name
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+    <div class="example-container">
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput [(ngModel)]="firstName">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput [(ngModel)]="lastName">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Patronymic</mat-label>
+        <input matInput [(ngModel)]="patronymic">
+      </mat-form-field>
+      <br>
+        <div style="color:grey;">Gender</div>
+        <mat-radio-group [(ngModel)]="gender">
+          <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="1">Male</mat-radio-button>
+          <mat-radio-button  color="primary" style="padding:4px 0px 0px 24px;" value="2">Female</mat-radio-button>
+        </mat-radio-group>
+      <br>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker1" placeholder="Date of birth" [(ngModel)]="date">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select [(ngModel)]="charm">
+          <mat-option value="1">Kind</mat-option>
+          <mat-option value="2">Rude</mat-option>
+          <mat-option value="3">Сaring</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <br>
 
-        <mat-grid-tile>
-          <div class="text-inside">
-            <mat-form-field>
-              <label>
-                <input matInput [matDatepicker]="picker1" placeholder="Date of birth">
-              </label>
-              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-              <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="text-inside">
-            <mat-form-field class="example-full-width">
-              <label>
-                <input matInput placeholder="Email address" formControlName="email" required>
-              </label>
-              <mat-error *ngIf="formGroup.controls.email.hasError('required')">
-                Please enter email id
-              </mat-error>
-              <mat-error *ngIf="formGroup.controls.email.hasError('email')">
-                Please enter valid email id
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
+    <div>
+      <h3>Address of residence (actual)</h3>
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>Street</mat-label>
+        <input matInput [(ngModel)]="factAddress.street">
+      </mat-form-field>
 
-        <mat-grid-tile>
-          <div class="text-inside">
-            <mat-form-field>
-              <label>
-                <textarea matInput placeholder="Address"></textarea>
-              </label>
-            </mat-form-field>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="text-inside">
-            <mat-radio-group class="gender">
-              <div style="color:grey;">Gender</div>
-              <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="1">Male</mat-radio-button>
-              <mat-radio-button  color="primary" style="padding:4px 0px 0px 24px;" value="2">Female</mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>House</mat-label>
+        <input matInput [(ngModel)]="factAddress.house">
+      </mat-form-field>
 
-      <div class="btn-sec">
-        <button mat-raised-button type="submit" color="primary" class="Update-btn" >Save</button>
-        <button mat-raised-button type="button" class="Discard-btn" (click)="close()">Cancel</button>
-      </div>
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>Flat</mat-label>
+        <input matInput [(ngModel)]="factAddress.flat">
+      </mat-form-field>
+    </div>
 
-    </form>
+    <div>
+      <h3>Registration Address</h3>
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>Street</mat-label>
+        <input matInput [(ngModel)]="registrAddress.street">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>House</mat-label>
+        <input matInput [(ngModel)]="registrAddress.house">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>Flat</mat-label>
+        <input matInput [(ngModel)]="registrAddress.flat">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <h3>Your phones</h3>
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>Home phone</mat-label>
+        <input matInput>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>Work phone</mat-label>
+        <input matInput>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="witdhOfAddres">
+        <mat-label>Mobile phone</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+    <div class="btn-sec">
+      <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="saveClient()">Save</button>
+      <button mat-raised-button type="button" class="Discard-btn" (click)="close()">Cancel</button>
+    </div>
   </div>
+
 </div>

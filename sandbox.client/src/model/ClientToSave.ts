@@ -1,4 +1,6 @@
 import {Gender} from "./Gender";
+import {Address} from "./Address";
+import {Phones} from "./Phones";
 
 export class ClientToSave {
   public id: number;
@@ -10,5 +12,5 @@ export class ClientToSave {
   public charm: number;
   public factAddress: Address;
   public regAddress: Address;
-  public phones: Phone[];
+  public phones: Phones;
 }

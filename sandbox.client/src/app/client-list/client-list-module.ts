@@ -137,6 +137,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     PortalModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
   ],
   bootstrap: [ClientListComponent]
 })
