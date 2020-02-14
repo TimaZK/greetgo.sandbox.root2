@@ -57,3 +57,16 @@ mat-form-field {
   color: #ff4f4d;
   font-size: 12px;
 }
+
+.addNumb {
+  background-color: #7038ff;
+  margin-top: 10px;
+  color: #ffff;
+  display: block;
+}
+
+.deleteNumb {
+  display: block;
+  background-color: #ff4f4d;
+  color: #ffff;
+}

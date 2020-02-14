@@ -1,5 +1,7 @@
+import {PhoneType} from "./PhoneType";
+
 export class Phones {
-  public homePhone: string;
-  public workPhone: string;
-  public mobilePhone: string;
+  public id: string;
+  public number: string;
+  public type: PhoneType;
 }

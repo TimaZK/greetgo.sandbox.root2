@@ -198,7 +198,25 @@
       </mat-form-field>
     </div>
 
+    <div formArrayName="phones">
+      <div *ngFor="let phone of phones.controls; index as idx" [formGroupName]="idx">
+        <mat-form-field>
+          <mat-label>Phone Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="HOME">HOME</mat-option>
+            <mat-option value="WORK">WORK</mat-option>
+            <mat-option value="MOBILE">MOBILE</mat-option>
+          </mat-select>
+        </mat-form-field>
 
+        <mat-form-field appearance="fill" class="witdhOfAddres">
+          <mat-label>Enter number</mat-label>
+          <input matInput formControlName="number" placeholder="Enter phone number">
+        </mat-form-field>
+        <button mat-raised-button type="button" (click)="deletePhoneField(idx)" *ngIf="idx>0" class="deleteNumb">Delete</button>
+        <button mat-raised-button type="button" (click)="addPhoneField()" *ngIf="idx==0" class="addNumb">Add phone number</button>
+      </div>
+    </div>
 
     <div class="btn-sec">
       <button mat-raised-button type="submit" color="primary" [disabled]="!myFirstReactiveForm.valid" class="Update-btn" (click)="saveClient()">Save</button>
@@ -207,89 +225,3 @@
   </form>
 
 </div>
-
-
-
-<!--<div>-->
-<!--  <h3>Your phones</h3>-->
-<!--  <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--    <mat-label>Home phone</mat-label>-->
-<!--    <input matInput>-->
-<!--  </mat-form-field>-->
-
-<!--  <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--    <mat-label>Work phone</mat-label>-->
-<!--    <input matInput>-->
-<!--  </mat-form-field>-->
-
-<!--  <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--    <mat-label>Mobile phone</mat-label>-->
-<!--    <input matInput>-->
-<!--  </mat-form-field>-->
-<!--</div>-->
-
-
-<!--    <h3>Your phones</h3>-->
-<!--    <div formArrayName="phonesArr">-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Home phone</mat-label>-->
-<!--        <input matInput formControlName="homePhone">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Work phone</mat-label>-->
-<!--        <input matInput formControlName="workPhone">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Mobile phone</mat-label>-->
-<!--        <input matInput formControlName="mobilePhone">-->
-<!--      </mat-form-field>-->
-
-<!--      <div *ngFor="let phone of phoneForms.controls; let i = index;">-->
-<!--        <div [formGroupName]="i">-->
-
-<!--          <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--            <mat-label>Mobile phone</mat-label>-->
-<!--            <input matInput formControlName="mobilePhone">-->
-<!--          </mat-form-field>-->
-
-<!--          <button (click)="deletePhone(i)">Delete</button>-->
-
-<!--        </div>-->
-<!--      </div>-->
-<!--      <button (click)="addFriend()">Add Mobile Phone</button>-->
-<!--    </div>-->
-
-
-
-
-<!--    <h3>Your phones</h3>-->
-<!--    <div formArrayName="phonesArr">-->
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Home phone</mat-label>-->
-<!--        <input matInput formControlName="homePhone">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Work phone</mat-label>-->
-<!--        <input matInput formControlName="workPhone">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Mobile phone</mat-label>-->
-<!--        <input matInput formControlName="mobilePhone">-->
-<!--      </mat-form-field>-->
-
-<!--      <div *ngFor="let phone of phoneForms.controls; let i = index" formGroupName="i">-->
-
-<!--        <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--          <mat-label>Mobile phone</mat-label>-->
-<!--          <input matInput formControlName="mobilePhone">-->
-<!--        </mat-form-field>-->
-<!--        -->
-<!--        <button (click)="deletePhone(i)">Delete</button>-->
-<!--      </div>-->
-<!--      <button (click)="addPhone()">Add Phone Number</button>-->
-<!--    </div>-->

@@ -6,6 +6,7 @@ import {LoginService} from "../login/login.service";
 import {ClientListService} from "./client-list.service";
 import {AddCustomerComponent} from "../add-customer/add-customer.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ClientToSave} from "../../model/ClientToSave";
 
 @Component({
   selector: 'app-client-list',
@@ -17,14 +18,16 @@ export class ClientListComponent implements OnInit {
   constructor(
     public login: LoginService,
     public listService: ClientListService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
   }
+
+  a: ClientToSave[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   filterName: string;
-  displayedColumns: string[] = ['id', 'fio', 'age', 'character', 'totalBalanceOfAccounts', 'maximumBalance', 'minimumBalance'];
+  displayedColumns: string[] = ['id', 'fio', 'age', 'character', 'totalBalanceOfAccounts', 'maximumBalance', 'minimumBalance', 'action'];
 
   dataSource = new MatTableDataSource();
 
@@ -48,8 +51,19 @@ export class ClientListComponent implements OnInit {
   openModal(): void {
     const dialogRef = this.dialog.open(AddCustomerComponent, {
       width: '700px',
-      height: '700px'
+      height: '700px',
     });
+  }
 
+  openDialog(action,obj) {
+      console.log(this.dataSource.data);
   }
 }
+
+// openDialog(action,obj) {
+//   obj.action = action;
+//   const dialogRef = this.dialog.open(AddCustomerComponent, {
+//     width: '700px',
+//     height: '700px'
+//   });
+// }

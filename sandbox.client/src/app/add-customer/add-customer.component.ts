@@ -6,17 +6,23 @@ import {ClientToSave} from "../../model/ClientToSave";
 import {Charm} from "../../model/Charm";
 import {Address} from "../../model/Address";
 import {Phones} from "../../model/Phones";
+import {PhoneType} from "../../model/PhoneType";
+import {ClientListService} from "../client-list/client-list.service";
 
 @Component({
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.css']
 })
+
 export class AddCustomerComponent implements OnInit {
 
   myFirstReactiveForm: FormGroup;
 
-  client: ClientToSave = new ClientToSave();
+//   clientFunc(): ClientToSave[] {
+//     return this.clientArr
+// }
+
   clientArr: ClientToSave[] = [];
   charms: Charm[] = [
     {id: 1, name: "Kind"},
@@ -26,7 +32,7 @@ export class AddCustomerComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
   }
 
@@ -42,7 +48,7 @@ export class AddCustomerComponent implements OnInit {
       gender: this.fb.control([Gender.MALE, Validators.required]),
       date: this.fb.control(['', Validators.required]),
       charm: this.fb.control(['', Validators.required]),
-      factAddress: this.fb.group( {
+      factAddress: this.fb.group({
         street: (['']),
         house: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
         flat: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/))
@@ -50,31 +56,35 @@ export class AddCustomerComponent implements OnInit {
       regAddress: this.fb.group({
         street: this.fb.control([''], Validators.required),
         house: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-        flat: this.fb.control([''],[Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+        flat: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
       }),
-      phonesArr: this.fb.array([]),
+      phones: this.fb.array([
+        this.fb.group({
+          number: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+          type: this.fb.control([PhoneType.MOBILE], Validators.required),
+        })
+      ])
     });
   }
 
+  addPhoneField() {
+    const phone = this.fb.group({
+      number: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+      type: this.fb.control([PhoneType.MOBILE], Validators.required),
+    });
+    this.phones.push(phone);
+  }
 
-  // addFriend(): void {
-  //   const phones = <FormArray>this.myFirstReactiveForm.get('phonesArr');
-  //   this.phoneForms.push(
-  //     this.fb.group({
-  //       homePhone: this.fb.control(['']),
-  //       workPhone: this.fb.control(['']),
-  //       mobilePhone: this.fb.control([''])
-  //     })
-  //   )
-  // }
-  //
-  // get phoneForms() {
-  //   return this.myFirstReactiveForm.get('phonesArr') as FormArray;
-  // }
-  //
-  // deletePhone(i) {
-  //   this.phoneForms.removeAt(i)
-  // }
+  deletePhoneField(index: number) {
+    if(this.phones.length!==1) {
+      this.phones.removeAt(index);
+    }
+    console.log(this.phones.length);
+  }
+
+  get phones() {
+    return this.myFirstReactiveForm.get('phones') as FormArray;
+  }
 
   saveClient() {
     this.clientArr.push(this.myFirstReactiveForm.value);
