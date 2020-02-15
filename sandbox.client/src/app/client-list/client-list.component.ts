@@ -3,7 +3,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {LoginService} from "../login/login.service";
-import {ClientListService} from "./client-list.service";
+import {ClientListService} from "../services/client-list.service";
 import {AddCustomerComponent} from "../add-customer/add-customer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ClientToSave} from "../../model/ClientToSave";
@@ -22,8 +22,6 @@ export class ClientListComponent implements OnInit {
   ) {
   }
 
-  a: ClientToSave[];
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   filterName: string;
@@ -31,9 +29,8 @@ export class ClientListComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
 
-    ngOnInit() {
+  ngOnInit() {
     this.dataSource.paginator = this.paginator;
-      this.dataSource.data = this.listService.loadRecords();
   }
 
   myFunk($event: PageEvent) {
@@ -55,8 +52,8 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  openDialog(action,obj) {
-      console.log(this.dataSource.data);
+  openDialog(action, obj) {
+    console.log(this.dataSource.data);
   }
 }
 

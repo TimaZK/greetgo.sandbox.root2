@@ -7,7 +7,7 @@ import {HttpService} from "./http.service";
 import {HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./login/login.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ClientListService} from "./client-list/client-list.service";
+import {ClientListService} from "./services/client-list.service";
 import {AboutComponent} from './about/about.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";

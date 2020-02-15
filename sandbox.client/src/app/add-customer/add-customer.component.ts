@@ -7,7 +7,8 @@ import {Charm} from "../../model/Charm";
 import {Address} from "../../model/Address";
 import {Phones} from "../../model/Phones";
 import {PhoneType} from "../../model/PhoneType";
-import {ClientListService} from "../client-list/client-list.service";
+import {ClientListService} from "../services/client-list.service";
+import {ClientDisplay} from "../../model/ClientDisplay";
 
 @Component({
   selector: 'app-add-customer',
@@ -19,11 +20,8 @@ export class AddCustomerComponent implements OnInit {
 
   myFirstReactiveForm: FormGroup;
 
-//   clientFunc(): ClientToSave[] {
-//     return this.clientArr
-// }
-
   clientArr: ClientToSave[] = [];
+  // clientDisplayArr: ClientDisplay[] = [];
   charms: Charm[] = [
     {id: 1, name: "Kind"},
     {id: 2, name: "Rude"},
@@ -33,15 +31,18 @@ export class AddCustomerComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
+    public listService: ClientListService,
   ) {
   }
 
   ngOnInit() {
     this.initForm();
+    // this.clientDisplayArr = this.listService.loadRecords();
   }
 
   initForm() {
     this.myFirstReactiveForm = this.fb.group({
+      // id: ([234532]),
       firstName: (['', Validators.required]),
       lastName: (['', Validators.required]),
       patronymic: (['', Validators.required]),
@@ -89,6 +90,24 @@ export class AddCustomerComponent implements OnInit {
   saveClient() {
     this.clientArr.push(this.myFirstReactiveForm.value);
     console.log(this.clientArr);
+
+    this.listService.clientArr = this.clientArr;
+
+    let clientDisplay = new ClientDisplay();
+
+    for (let i=0; i<this.listService.clientArr.length; i++) {
+      if(this.listService.clientArr[i].id == null) {
+        clientDisplay.id = this.listService.loadRecords().length + 1;
+        clientDisplay.fio = '';
+        clientDisplay.age = 0;
+        clientDisplay.character = '';
+        clientDisplay.totalBalanceOfAccounts = 0;
+        clientDisplay.maximumBalance = 0;
+        clientDisplay.minimumBalance = 0;
+      }
+    }
+    this.listService.loadRecords().unshift(clientDisplay);
+    console.log(this.listService.loadRecords());
   }
 
   close() {
@@ -111,3 +130,9 @@ export class AddCustomerComponent implements OnInit {
     return this.myFirstReactiveForm.get('date');
   }
 }
+
+
+
+//for (let i=0; i<this.listService.clientArr.length; i++) {
+//       this.clientDisplayArr.push()
+//     }
