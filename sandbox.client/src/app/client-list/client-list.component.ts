@@ -26,6 +26,7 @@ export class ClientListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'fio', 'age', 'character', 'totalBalanceOfAccounts', 'maximumBalance', 'minimumBalance', 'action'];
 
   dataSource = new MatTableDataSource();
+  private newClientDisplay: ClientDisplay;
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -44,43 +45,51 @@ export class ClientListComponent implements OnInit {
     console.log($event);
   }
 
-  openModal(element): void {
+  openModal(id): void {
     const dialogRef = this.dialog.open(AddCustomerComponent, {
       width: '700px',
       height: '700px',
-      data: element
+      data: id
     });
 
-    // dialogRef.afterClosed().subscribe(
-    //   (res:ClientDisplay) => {
-    //     if (res.fio!=null) {
-    //       this.dataSource.data.unshift(res);
-    //       this.listService.loadRecords().unshift(res);
-    //       this.dataSource.data = [...this.dataSource.data];
-    //     } else {
-    //       return;
-    //     }
-    //  });
     dialogRef.afterClosed().subscribe(
       res=> {
         if (res == null) {
           return
-        } else {
-          this.dataSource.data.unshift(res);
-          this.listService.loadRecords().unshift(res);
+        }
+        else {
+          this.dataSource.data.unshift(this.createClientDisplay());
+          if (res.id != null) {
+            this.listService.clientArr.push(res);
+          } else {
+            return;
+          }
           this.dataSource.data = [...this.dataSource.data];
+          console.log(this.listService.clientArr);
+          console.log(this.listService.loadRecords());
         }
       }
     )
   }
 
-  openDialogDelete(element: any) {
-    this.dataSource.data = this.dataSource.data.filter((value:any) => value.id!=element.id);
-    console.log(element);
+  openDialogDelete(id) {
+    // this.dataSource.data = this.dataSource.data.filter((value:any) => value!=element);
+    console.log(id);
+    // this.dataSource.data = this.dataSource.data.filter(value => value!=id);
   }
 
-  openDialogUpdate(element: ClientDisplay) {
-    // this.openModal(element);
-    console.log(element);
+  openDialogUpdate(id: ClientDisplay) {
+    this.openModal(id);
+  }
+
+  createClientDisplay() {
+    this.newClientDisplay = new ClientDisplay();
+    this.newClientDisplay.id = 8;
+    this.newClientDisplay.fio = "Bla bla";
+    this.newClientDisplay.character = "Rude";
+    this.newClientDisplay.totalBalanceOfAccounts = 0;
+    this.newClientDisplay.maximumBalance = 0;
+    this.newClientDisplay.minimumBalance = 0;
+    return this.newClientDisplay;
   }
 }
