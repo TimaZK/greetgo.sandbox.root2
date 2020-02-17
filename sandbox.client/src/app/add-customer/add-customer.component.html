@@ -1,111 +1,3 @@
-<!--<div>-->
-
-<!--  <div class="add-title">-->
-<!--    <h2 class="primary">Add user</h2>-->
-<!--  </div>-->
-
-<!--  <div>-->
-<!--    <div class="example-container">-->
-<!--      <mat-form-field appearance="fill">-->
-<!--        <mat-label>First Name</mat-label>-->
-<!--        <input matInput [(ngModel)]="firstName">-->
-<!--      </mat-form-field>-->
-<!--      <br>-->
-<!--      <mat-form-field appearance="fill">-->
-<!--        <mat-label>Last Name</mat-label>-->
-<!--        <input matInput [(ngModel)]="lastName">-->
-<!--      </mat-form-field>-->
-<!--      <br>-->
-<!--      <mat-form-field appearance="fill">-->
-<!--        <mat-label>Patronymic</mat-label>-->
-<!--        <input matInput [(ngModel)]="patronymic">-->
-<!--      </mat-form-field>-->
-<!--      <br>-->
-<!--        <div style="color:grey;">Gender</div>-->
-<!--        <mat-radio-group [(ngModel)]="gender">-->
-<!--          <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="1">Male</mat-radio-button>-->
-<!--          <mat-radio-button  color="primary" style="padding:4px 0px 0px 24px;" value="2">Female</mat-radio-button>-->
-<!--        </mat-radio-group>-->
-<!--      <br>-->
-<!--      <mat-form-field>-->
-<!--        <input matInput [matDatepicker]="picker1" placeholder="Date of birth" [(ngModel)]="date">-->
-<!--        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>-->
-<!--        <mat-datepicker #picker1></mat-datepicker>-->
-<!--      </mat-form-field>-->
-<!--      <br>-->
-<!--      <mat-form-field appearance="fill">-->
-<!--        <mat-label>Select</mat-label>-->
-<!--        <mat-select [(ngModel)]="charm">-->
-<!--          <mat-option value="1">Kind</mat-option>-->
-<!--          <mat-option value="2">Rude</mat-option>-->
-<!--          <mat-option value="3">Сaring</mat-option>-->
-<!--        </mat-select>-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
-<!--    <br>-->
-
-<!--    <div>-->
-<!--      <h3>Address of residence (actual)</h3>-->
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Street</mat-label>-->
-<!--        <input matInput [(ngModel)]="factAddress.street">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>House</mat-label>-->
-<!--        <input matInput [(ngModel)]="factAddress.house">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Flat</mat-label>-->
-<!--        <input matInput [(ngModel)]="factAddress.flat">-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
-
-<!--    <div>-->
-<!--      <h3>Registration Address</h3>-->
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Street</mat-label>-->
-<!--        <input matInput [(ngModel)]="registrAddress.street">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>House</mat-label>-->
-<!--        <input matInput [(ngModel)]="registrAddress.house">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Flat</mat-label>-->
-<!--        <input matInput [(ngModel)]="registrAddress.flat">-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
-
-<!--    <div>-->
-<!--      <h3>Your phones</h3>-->
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Home phone</mat-label>-->
-<!--        <input matInput>-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Work phone</mat-label>-->
-<!--        <input matInput>-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="fill" class="witdhOfAddres">-->
-<!--        <mat-label>Mobile phone</mat-label>-->
-<!--        <input matInput>-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
-<!--    <div class="btn-sec">-->
-<!--      <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="saveClient()">Save</button>-->
-<!--      <button mat-raised-button type="button" class="Discard-btn" (click)="close()">Cancel</button>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--</div>-->
-
-
 <div>
 
   <div class="add-title">
@@ -220,8 +112,11 @@
 
     <div class="btn-sec">
       <button mat-raised-button type="submit" color="primary" [disabled]="!myFirstReactiveForm.valid" class="Update-btn" (click)="saveClient()">Save</button>
-      <button mat-raised-button type="button" class="Discard-btn" (click)="close()">Cancel</button>
+      <button mat-raised-button type="button" class="Discard-btn">Cancel</button>
     </div>
   </form>
 
 </div>
+
+
+<!--[mat-dialog-close]="newClientDisplay"-->

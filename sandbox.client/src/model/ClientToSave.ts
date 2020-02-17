@@ -1,6 +1,7 @@
 import {Gender} from "./Gender";
 import {Address} from "./Address";
 import {Phones} from "./Phones";
+import {ClientDisplay} from "./ClientDisplay";
 
 export class ClientToSave {
   public id: number;
@@ -13,4 +14,5 @@ export class ClientToSave {
   public factAddress: Address;
   public regAddress: Address;
   public phones: Phones;
+  public clientDisplay: ClientDisplay;
 }

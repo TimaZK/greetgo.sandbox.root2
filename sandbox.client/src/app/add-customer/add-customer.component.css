@@ -70,3 +70,18 @@ mat-form-field {
   background-color: #ff4f4d;
   color: #ffff;
 }
+
+.updateButton {
+  background-color: limegreen;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  background-color: #ff4f4d;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+}

@@ -2,11 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
-import {LoginService} from "../login/login.service";
 import {ClientListService} from "../services/client-list.service";
 import {AddCustomerComponent} from "../add-customer/add-customer.component";
 import {MatDialog} from "@angular/material/dialog";
-import {ClientToSave} from "../../model/ClientToSave";
+import {ClientDisplay} from "../../model/ClientDisplay";
 
 @Component({
   selector: 'app-client-list',
@@ -16,7 +15,6 @@ import {ClientToSave} from "../../model/ClientToSave";
 
 export class ClientListComponent implements OnInit {
   constructor(
-    public login: LoginService,
     public listService: ClientListService,
     public dialog: MatDialog,
   ) {
@@ -31,6 +29,7 @@ export class ClientListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.data = this.listService.loadRecords();
   }
 
   myFunk($event: PageEvent) {
@@ -45,22 +44,43 @@ export class ClientListComponent implements OnInit {
     console.log($event);
   }
 
-  openModal(): void {
+  openModal(element): void {
     const dialogRef = this.dialog.open(AddCustomerComponent, {
       width: '700px',
       height: '700px',
+      data: element
     });
+
+    // dialogRef.afterClosed().subscribe(
+    //   (res:ClientDisplay) => {
+    //     if (res.fio!=null) {
+    //       this.dataSource.data.unshift(res);
+    //       this.listService.loadRecords().unshift(res);
+    //       this.dataSource.data = [...this.dataSource.data];
+    //     } else {
+    //       return;
+    //     }
+    //  });
+    dialogRef.afterClosed().subscribe(
+      res=> {
+        if (res == null) {
+          return
+        } else {
+          this.dataSource.data.unshift(res);
+          this.listService.loadRecords().unshift(res)
+          this.dataSource.data = [...this.dataSource.data];
+        }
+      }
+    )
   }
 
-  openDialog(action, obj) {
-    console.log(this.dataSource.data);
+  openDialogDelete(element: any) {
+    this.dataSource.data = this.dataSource.data.filter((value:any) => value.id!=element.id);
+    console.log(element);
+  }
+
+  openDialogUpdate(element: ClientDisplay) {
+    // this.openModal(element);
+    console.log(element);
   }
 }
-
-// openDialog(action,obj) {
-//   obj.action = action;
-//   const dialogRef = this.dialog.open(AddCustomerComponent, {
-//     width: '700px',
-//     height: '700px'
-//   });
-// }
