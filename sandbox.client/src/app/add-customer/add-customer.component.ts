@@ -127,10 +127,7 @@ export class AddCustomerComponent implements OnInit {
         this.newClientDisplay.totalBalanceOfAccounts = 0;
         this.newClientDisplay.maximumBalance = 0;
         this.newClientDisplay.minimumBalance = 0;
-        this.listService.clientArr[i].clientDisplay = this.newClientDisplay;
         this.dialogRef.close(this.newClientDisplay);
-        // console.log(this.newClientDisplay);
-        console.log(this.listService.clientArr[i]);
       }
     }
   }
@@ -149,5 +146,9 @@ export class AddCustomerComponent implements OnInit {
 
   get date() {
     return this.myFirstReactiveForm.get('date');
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 }

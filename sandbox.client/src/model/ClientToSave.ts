@@ -14,5 +14,4 @@ export class ClientToSave {
   public factAddress: Address;
   public regAddress: Address;
   public phones: Phones;
-  public clientDisplay: ClientDisplay;
 }

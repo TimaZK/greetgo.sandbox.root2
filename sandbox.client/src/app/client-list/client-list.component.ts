@@ -67,7 +67,7 @@ export class ClientListComponent implements OnInit {
           return
         } else {
           this.dataSource.data.unshift(res);
-          this.listService.loadRecords().unshift(res)
+          this.listService.loadRecords().unshift(res);
           this.dataSource.data = [...this.dataSource.data];
         }
       }
