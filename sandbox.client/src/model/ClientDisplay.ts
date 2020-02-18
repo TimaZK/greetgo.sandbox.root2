@@ -1,7 +1,5 @@
-import {ClientToSave} from "./ClientToSave";
-
 export class ClientDisplay {
-  public id: number;
+  public id: string;
   public fio: string;
   public character: string;
   public age: number;
