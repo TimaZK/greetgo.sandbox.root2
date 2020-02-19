@@ -62,6 +62,7 @@ export class ClientListComponent implements OnInit {
           this.newClientDisplay = new ClientDisplay();
           this.newClientDisplay.id = res.id;
           this.newClientDisplay.fio = res.firstName + " " + res.lastName;
+          this.newClientDisplay.age = 0;
           if (res.charm == 1) {
             this.newClientDisplay.character = this.listService.charms[0].name;
           } else if (res.charm == 2) {
