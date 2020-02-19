@@ -20,11 +20,6 @@ export class ClientListComponent implements OnInit {
     public dialog: MatDialog,
   ) {
   }
-  charms: Charm[] = [
-    {id: 1, name: "Kind"},
-    {id: 2, name: "Rude"},
-    {id: 3, name: "Caring"}
-  ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -68,11 +63,11 @@ export class ClientListComponent implements OnInit {
           this.newClientDisplay.id = res.id;
           this.newClientDisplay.fio = res.firstName + " " + res.lastName;
           if (res.charm == 1) {
-            this.newClientDisplay.character = this.charms[0].name;
+            this.newClientDisplay.character = this.listService.charms[0].name;
           } else if (res.charm == 2) {
-            this.newClientDisplay.character = this.charms[1].name;
+            this.newClientDisplay.character = this.listService.charms[1].name;
           } else {
-            this.newClientDisplay.character = this.charms[2].name;
+            this.newClientDisplay.character = this.listService.charms[2].name;
           }
           this.newClientDisplay.totalBalanceOfAccounts = 0;
           this.newClientDisplay.maximumBalance = 0;
@@ -105,8 +100,6 @@ export class ClientListComponent implements OnInit {
 
   openDialogDelete(id) {
     this.dataSource.data = this.dataSource.data.filter((value:any) => value.id!=id);
-    // this.listService.clientArr = this.listService.clientArr.filter((value:any) => value.id!=id);
-    // this.listService.clientArr = this.listService.clientArr.filter((value:any) => value.id!=id);
   }
 
   openDialogUpdate(id: ClientDisplay) {

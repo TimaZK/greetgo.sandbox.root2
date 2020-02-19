@@ -5,6 +5,7 @@ import {ClientToSave} from "../../model/ClientToSave";
 import {Gender} from "../../model/Gender";
 import {PhoneType} from "../../model/PhoneType";
 import {AddressType} from "../../model/AddressType";
+import {Charm} from "../../model/Charm";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,12 @@ export class ClientListService {
   loadRecords(): ClientDisplay[] {
     return  this.clientDispayArr;
   }
+
+  charms: Charm[] = [
+    {id: "1", name: "Kind"},
+    {id: "2", name: "Rude"},
+    {id: "3", name: "Caring"}
+  ];
   // @ts-ignore
   clientDispayArr: ClientDisplay[] = [
     {id: "1", fio: 'Tima Zarlykov Kairatovic', age: 20, character: 'Kind', totalBalanceOfAccounts: 2000, maximumBalance: 1500, minimumBalance: 500},
@@ -31,37 +38,37 @@ export class ClientListService {
 
   // @ts-ignore
   clientArr: ClientToSave[] = [
-    {id: "1", firstName: "Tima", lastName: "Zarlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: '2/14/2020',
+    {id: "1", firstName: "Tima", lastName: "Zarlykov", patron: "Kairatovic", charm: "1", gender: Gender.FEMALE, birthDay: new Date(),
     factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
     phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}, {id: "2", number: "564563456", type: PhoneType.FAX}]
     },
 
-    {id: "2", firstName: "Bima", lastName: "Narlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: '2020-01-01',
+    {id: "2", firstName: "Bima", lastName: "Narlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: new Date(),
       factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
       phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}]
     },
 
-    {id: "3", firstName: "Lima", lastName: "Marlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: '2020-01-01',
+    {id: "3", firstName: "Lima", lastName: "Marlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: new Date(),
       factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
       phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}]
     },
 
-    {id: "4", firstName: "Rima", lastName: "Barlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: '2020-01-01',
+    {id: "4", firstName: "Rima", lastName: "Barlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: new Date(),
       factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
       phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}]
     },
 
-    {id: "5", firstName: "Hima", lastName: "Qarlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: '2020-01-01',
+    {id: "5", firstName: "Hima", lastName: "Qarlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: new Date(),
       factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
       phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}]
     },
 
-    {id: "6", firstName: "Pima", lastName: "Jarlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: '2020-01-01',
+    {id: "6", firstName: "Pima", lastName: "Jarlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: new Date(),
       factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
       phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}]
     },
 
-    {id: "7", firstName: "Fima", lastName: "Darlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: '2020-01-01',
+    {id: "7", firstName: "Fima", lastName: "Darlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: new Date(),
       factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
       phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}]
     }
