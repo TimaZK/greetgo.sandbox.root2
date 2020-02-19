@@ -91,7 +91,7 @@
     </div>
 
     <div formArrayName="phones">
-      <div *ngFor="let phone of phones.controls; index as idx" [formGroupName]="idx">
+      <div *ngFor="let phone of phones.controls; index as idx" [formGroupName]="idx" class="phoneTypes">
         <mat-form-field>
           <mat-label>Phone Type</mat-label>
           <mat-select formControlName="type">

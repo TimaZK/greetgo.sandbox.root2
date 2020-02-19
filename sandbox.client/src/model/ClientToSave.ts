@@ -10,7 +10,7 @@ export class ClientToSave {
   public gender: Gender;
   public birthDay: Date;
   public charm: string;
-  public factAddress: Address;
-  public regAddress: Address;
-  public phones: Phones;
+  public factAddress = new Address();
+  public regAddress = new Address();
+  public phones = new Array<Phones>();
 }

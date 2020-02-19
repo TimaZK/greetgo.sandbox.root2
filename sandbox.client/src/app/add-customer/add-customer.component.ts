@@ -26,7 +26,7 @@ export class AddCustomerComponent implements OnInit {
     {id: 2, name: "Rude"},
     {id: 3, name: "Caring"}
   ];
-  private clientToSave: ClientToSave;
+  private clientToSave = new ClientToSave();
 
   constructor(
     private fb: FormBuilder,
@@ -41,51 +41,42 @@ export class AddCustomerComponent implements OnInit {
   }
 
   initForm() {
-    if (this.data == null) {
-      this.myFirstReactiveForm = this.fb.group({
-        id: ([String(this.listService.clientArr.length+1)]),
-        firstName: (['', Validators.required]),
-        lastName: (['', Validators.required]),
-        patron: (['', Validators.required]),
-        gender: this.fb.control([Gender.MALE, Validators.required]),
-        birthDay: this.fb.control(['', Validators.required]),
-        charm: this.fb.control(['', Validators.required]),
-        factAddress: this.fb.group({
-          street: this.fb.control(['']),
-          house: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-          flat: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-          type: this.fb.control([AddressType.FACT]),
-        }),
-        regAddress: this.fb.group({
-          street: this.fb.control([''], Validators.required),
-          house: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-          flat: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-          type: this.fb.control([AddressType.REG]),
-        }),
-        phones: this.fb.array([
-          this.fb.group({
-            id: this.fb.control(['']),
-            number: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-            type: this.fb.control([PhoneType.MOBILE], Validators.required),
-          })
-        ])
+    if (this.data) this.clientToSave = this.listService.findBiIdinClientToSave(this.data);
+    console.log('this.clientToSave ', this.clientToSave);
+    this.myFirstReactiveForm = this.fb.group({
+      id: this.clientToSave.id || ([String(this.listService.clientArr.length+1)]),
+      firstName: ([this.clientToSave.firstName || '', Validators.required]),
+      lastName: ([this.clientToSave.lastName || '', Validators.required]),
+      patron: ([this.clientToSave.patron || '', Validators.required]),
+      gender: this.fb.control([this.clientToSave.gender || Gender.MALE, Validators.required]),
+      birthDay: this.fb.control([this.clientToSave.birthDay || '', Validators.required]),
+      charm: this.fb.control([this.clientToSave.charm || '', Validators.required]),
+      factAddress: this.fb.group({
+        street: this.fb.control(['']),
+        house: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+        flat: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+        type: this.fb.control([AddressType.FACT]),
+      }),
+      regAddress: this.fb.group({
+        street: this.fb.control([this.clientToSave.regAddress.street || ''], Validators.required),
+        house: this.fb.control([this.clientToSave.regAddress.house || ''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+        flat: this.fb.control([this.clientToSave.regAddress.flat || ''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+        type: this.fb.control([this.clientToSave.regAddress.type || AddressType.REG]),
+      }),
+      phones: this.fb.array([
+        this.fb.group({
+          id: this.fb.control(['']),
+          number: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+          type: this.fb.control([PhoneType.MOBILE], Validators.required),
+        })
+      ])
+    });
+
+    if (this.clientToSave && this.clientToSave.phones && this.clientToSave.phones.length > 0) {
+      this.clientToSave.phones.forEach((phone) => {
+        let fg = this.fb.group(phone);
+        this.phones.push(fg);
       });
-    } else {
-      this.clientToSave = this.listService.findBiIdinClientToSave(this.data);
-      this.clientToSave.birthDay = new Date();
-      this.myFirstReactiveForm.patchValue(
-        {
-          id: this.clientToSave.id,
-          firstName: this.clientToSave.firstName,
-          lastName: this.clientToSave.lastName,
-          birthDay: this.clientToSave.birthDay,
-          gender: this.clientToSave.gender,
-          charm: this.clientToSave.charm,
-          regAddress: this.clientToSave.regAddress,
-          factAddress: this.clientToSave.factAddress,
-          phones: this.clientToSave.phones
-        }
-      );
     }
   }
 
@@ -110,6 +101,7 @@ export class AddCustomerComponent implements OnInit {
   }
 
   saveClient() {
+    // вот здесь проверяю поле массива на пустоту
     this.dialogRef.close(this.myFirstReactiveForm.value);
   }
 
