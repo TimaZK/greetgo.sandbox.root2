@@ -6,7 +6,7 @@ import {ClientListService} from "../services/client-list.service";
 import {AddCustomerComponent} from "../add-customer/add-customer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ClientDisplay} from "../../model/ClientDisplay";
-import {Charm} from "../../model/Charm";
+import {PageFilter} from "../../model/PageFilter";
 
 @Component({
   selector: 'app-client-list',
@@ -23,27 +23,39 @@ export class ClientListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  filterName: string;
   displayedColumns: string[] = ['id', 'fio', 'age', 'character', 'totalBalanceOfAccounts', 'maximumBalance', 'minimumBalance', 'action'];
 
   dataSource = new MatTableDataSource();
   private newClientDisplay: ClientDisplay;
+  private pageFilter: PageFilter;
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.pageFilter = new PageFilter();
+    this.pageFilter.pageSize = 5;
+    this.pageFilter.pageNumber = 0;
     this.dataSource.data = this.listService.loadRecords();
+    // this.listService.loadClientRecords();
   }
 
   myFunk($event: PageEvent) {
-    console.log($event)
+    this.pageFilter.pageSize = $event.pageSize;
+    this.pageFilter.pageNumber = $event.pageIndex;
+    this.pageFilter.filterName = "";
+    console.log(this.pageFilter);
   }
 
-  applyFilter() {
-    console.log(this.filterName);
+  applyFilter(value) {
+    this.pageFilter.filterName = value;
+    this.pageFilter.sortName = "";
+    this.pageFilter.direction = "";
+    console.log(this.pageFilter);
   }
 
   myFunk1($event: any) {
-    console.log($event);
+    this.pageFilter.sortName = $event.active;
+    this.pageFilter.direction = $event.direction;
+    this.pageFilter.filterName = "";
+    console.log(this.pageFilter);
   }
 
   openModal(id): void {

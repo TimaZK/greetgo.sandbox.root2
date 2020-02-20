@@ -91,7 +91,9 @@
       </mat-form-field>
     </div>
 
+
     <div formArrayName="phones">
+      <button mat-raised-button type="button" (click)="addPhoneField()" class="addNumb">Add phone number</button>
       <div *ngFor="let phone of phones.controls; index as idx" [formGroupName]="idx" class="phoneTypes">
         <mat-form-field>
           <mat-label>Phone Type</mat-label>
@@ -101,13 +103,11 @@
             <mat-option value="MOBILE">MOBILE</mat-option>
           </mat-select>
         </mat-form-field>
-
         <mat-form-field appearance="fill" class="witdhOfAddres">
           <mat-label>Enter number</mat-label>
           <input matInput formControlName="number" placeholder="Enter number">
         </mat-form-field>
-        <button mat-raised-button type="button" (click)="deletePhoneField(idx)" *ngIf="idx>0" class="deleteNumb">Delete</button>
-        <button mat-raised-button type="button" (click)="addPhoneField()" *ngIf="idx==0" class="addNumb">Add phone number</button>
+        <button mat-raised-button type="button" *ngIf="phones.controls.length > 1" (click)="deletePhoneField(idx)" class="deleteNumb">Delete</button>
       </div>
     </div>
 

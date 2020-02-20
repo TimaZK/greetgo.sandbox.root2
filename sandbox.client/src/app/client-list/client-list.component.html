@@ -1,8 +1,8 @@
 <mat-form-field>
   <mat-label>Filter</mat-label>
   <label class="filter">
-    <input matInput placeholder="Ex. ium">
-    <button mat-button (click)="applyFilter()">Search</button>
+    <input matInput placeholder="Ex. ium" #box>
+    <button mat-button (click)="applyFilter(box.value)">Search</button>
   </label>
 </mat-form-field>
 

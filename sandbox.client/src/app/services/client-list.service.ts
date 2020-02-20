@@ -16,6 +16,25 @@ export class ClientListService {
   ) {
   }
 
+
+
+  // loadClientRecords(): Promise<void> {
+  //   return this.http.get("/client/")
+  //     .toPromise().then(x=> {
+  //     });
+  //   /*  .then(resp => resp.body as Array<any>)
+  //     .then(body => body.map(r => PersonRecord.create(r)));*/
+  // }
+
+  findall(): Promise<void> {
+    return this.http.get("client/")
+      .toPromise().then(res=> {
+
+      });
+  }
+
+
+
   loadRecords(): ClientDisplay[] {
     return  this.clientDispayArr;
   }

@@ -28,11 +28,9 @@ mat-form-field {
 }
 .Update-btn {
   margin: 5px;
-  margin-top: 30px;
 }
 .Discard-btn {
   margin: 5px;
-  margin-top: 30px;
 }
 .text-inside {
   position: absolute;
@@ -62,8 +60,7 @@ mat-form-field {
 
 .addNumb {
   background-color: #7038ff;
-  margin-top: -70px;
-  margin-left: 400px;
+  margin-top: 10px;
   color: #ffff;
   display: block;
 }
@@ -72,10 +69,19 @@ mat-form-field {
   display: block;
   background-color: #ff4f4d;
   color: #ffff;
-  margin-top: -70px;
-  margin-left: 450px;
 }
 
-.phoneTypes {
-  margin-top: 30px;
+.updateButton {
+  background-color: limegreen;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  background-color: #ff4f4d;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
 }

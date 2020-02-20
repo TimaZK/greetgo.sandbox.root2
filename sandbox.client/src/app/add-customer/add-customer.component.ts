@@ -18,7 +18,6 @@ export class AddCustomerComponent implements OnInit {
 
   myFirstReactiveForm: FormGroup;
 
-  clientArr: ClientToSave[] = [];
   private clientToSave = new ClientToSave();
 
   constructor(
@@ -34,72 +33,75 @@ export class AddCustomerComponent implements OnInit {
     this.initForm();
   }
 
-   initForm() {
-      this.myFirstReactiveForm = this.fb.group({
+  initForm() {
+    this.myFirstReactiveForm = this.fb.group({
 
-        id: ([String(this.listService.clientArr.length+1)]),
-        firstName: (['', Validators.required]),
-        lastName: (['', Validators.required]),
-        patron: (['', Validators.required]),
-        gender: ([Gender.MALE, Validators.required]),
-        birthDay: (['', Validators.required]),
-        charm: (['', Validators.required]),
+      id: ([String(this.listService.clientArr.length+1)]),
+      firstName: (['', Validators.required]),
+      lastName: (['', Validators.required]),
+      patron: (['', Validators.required]),
+      gender: ([Gender.MALE, Validators.required]),
+      birthDay: (['', Validators.required]),
+      charm: (['', Validators.required]),
 
-        factAddress: this.fb.group({
-          street: this.fb.control(['']),
-          house: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-          flat: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-          type: this.fb.control([AddressType.FACT]),
+      factAddress: this.fb.group({
+        street: this.fb.control(['']),
+        house: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+        flat: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+        type: this.fb.control([AddressType.FACT]),
+      }),
+
+      regAddress: this.fb.group({
+        street: this.fb.control([''], Validators.required),
+        house: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+        flat: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+        type: this.fb.control([AddressType.REG]),
+      }),
+
+      phones: this.fb.array([
+        this.createInsideArrForPhones()
+      ])
+    });
+
+    if (this.data) {
+      this.clientToSave = this.listService.findBiIdinClientToSave(this.data);
+      this.myFirstReactiveForm.patchValue({
+
+        id: this.clientToSave.id,
+        firstName: this.clientToSave.firstName,
+        lastName: this.clientToSave.lastName,
+        patron: this.clientToSave.patron,
+        gender: this.clientToSave.gender,
+        birthDay: this.clientToSave.birthDay,
+        charm: this.clientToSave.charm,
+
+        factAddress: ({
+          street: this.clientToSave.factAddress.street,
+          house: this.clientToSave.factAddress.house,
+          flat: this.clientToSave.factAddress.flat,
+          type: AddressType.FACT,
         }),
 
-        regAddress: this.fb.group({
-          street: this.fb.control([''], Validators.required),
-          house: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-          flat: this.fb.control([''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-          type: this.fb.control([AddressType.REG]),
+        regAddress: ({
+          street: this.clientToSave.regAddress.street,
+          house: this.clientToSave.regAddress.house,
+          flat: this.clientToSave.regAddress.flat,
+          type: AddressType.REG,
         }),
-
-        phones: this.fb.array([
-          this.createInsideArr()
-        ])
       });
-
-     if (this.data) {
-       this.clientToSave = this.listService.findBiIdinClientToSave(this.data);
-       this.myFirstReactiveForm.patchValue({
-
-         id: this.clientToSave.id,
-         firstName: this.clientToSave.firstName,
-         lastName: this.clientToSave.lastName,
-         patron: this.clientToSave.patron,
-         gender: this.clientToSave.gender,
-         birthDay: this.clientToSave.birthDay,
-         charm: this.clientToSave.charm,
-
-         factAddress: ({
-           street: this.clientToSave.factAddress.street,
-           house: this.clientToSave.factAddress.house,
-           flat: this.clientToSave.factAddress.flat,
-           type: AddressType.FACT,
-         }),
-
-         regAddress: ({
-           street: this.clientToSave.regAddress.street,
-           house: this.clientToSave.regAddress.house,
-           flat: this.clientToSave.regAddress.flat,
-           type: AddressType.REG,
-         }),
-       });
-       if (this.clientToSave && this.clientToSave.phones && this.clientToSave.phones.length > 0) {
-         this.clientToSave.phones.forEach((phone) => {
-           let fg = this.fb.group(phone);
-           this.phones.push(fg);
-         });
-       }
-     }
+      if (this.clientToSave && this.clientToSave.phones && this.clientToSave.phones.length > 0) {
+        for (let i=0; i<this.clientToSave.phones.length; i++) {
+          this.phones.removeAt(i);
+        }
+        this.clientToSave.phones.forEach((phone) => {
+          let fg = this.fb.group(phone);
+          this.phones.push(fg);
+        });
+      }
+    }
   }
 
-  createInsideArr() {
+  createInsideArrForPhones() {
     return this.fb.group({
       number: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
       type: this.fb.control([PhoneType.MOBILE], Validators.required),
@@ -107,7 +109,7 @@ export class AddCustomerComponent implements OnInit {
   }
 
   addPhoneField() {
-    this.phones.push(this.createInsideArr());
+    this.phones.push(this.createInsideArrForPhones());
   }
 
   deletePhoneField(index: number) {
@@ -122,12 +124,7 @@ export class AddCustomerComponent implements OnInit {
   }
 
   saveClient() {
-    if (this.data) {
-      this.myFirstReactiveForm.value.phones.shift();
-      this.dialogRef.close(this.myFirstReactiveForm.value);
-    } else {
-      this.dialogRef.close(this.myFirstReactiveForm.value);
-    }
+    this.dialogRef.close(this.myFirstReactiveForm.value);
   }
 
   get firstName() {

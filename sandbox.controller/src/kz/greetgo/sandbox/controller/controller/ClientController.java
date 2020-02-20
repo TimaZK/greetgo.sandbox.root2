@@ -1,10 +1,7 @@
 package kz.greetgo.sandbox.controller.controller;
 
-import com.sun.security.ntlm.Client;
 import kz.greetgo.depinject.core.Bean;
 import kz.greetgo.depinject.core.BeanGetter;
-import kz.greetgo.mvc.annotations.Json;
-import kz.greetgo.mvc.annotations.Par;
 import kz.greetgo.mvc.annotations.ToJson;
 import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
@@ -14,17 +11,14 @@ import kz.greetgo.sandbox.controller.util.Controller;
 
 import java.util.List;
 
+
 @Bean
-@ControllerPrefix("/person")
-public class PersonController implements Controller {
+@ControllerPrefix("/client")
+public class ClientController implements Controller{
 
-  public BeanGetter<PersonRegister> personRegister;
 
-  @ToJson
-  @OnGet("/list")
-  public List<PersonRecord> list() {
-    return personRegister.get().list();
+  @OnGet("/")
+  public void list() {
+    System.out.println("blaaaa");
   }
-
-
 }
