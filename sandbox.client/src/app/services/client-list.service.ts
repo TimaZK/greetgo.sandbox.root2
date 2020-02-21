@@ -18,20 +18,36 @@ export class ClientListService {
 
 
 
-  // loadClientRecords(): Promise<void> {
-  //   return this.http.get("/client/")
-  //     .toPromise().then(x=> {
-  //     });
-  //   /*  .then(resp => resp.body as Array<any>)
-  //     .then(body => body.map(r => PersonRecord.create(r)));*/
-  // }
-
-  findall(): Promise<void> {
-    return this.http.get("client/")
-      .toPromise().then(res=> {
-
+  loadClientRecords(): Promise<void> {
+    return this.http.get("/client/")
+      .toPromise().then(x=> {
       });
+    /*.then(resp => resp.body as Array<any>)
+      .then(body => body.map(r => PersonRecord.create(r)));*/
   }
+
+  findall(): Promise<ClientDisplay[]> {
+    return this.http.get("/client")
+      .toPromise().then(x=> x.body)
+  }
+
+  saveClient(client: ClientToSave): Promise<string> {
+    return this.http.post("/client", {clientToSave: JSON.stringify(client)})
+      .toPromise().then(x=> x.body)
+  }
+
+
+  deleteClient(id: string){
+    return this.http.delete("/client", {id: id})
+      .toPromise().then(x=> {}).catch(error => error.error)
+  }
+
+  getCharmList(){
+    return this.http.get("/charm")
+      .toPromise().then(x=> {}).catch(error => error.error)
+  }
+
+
 
 
 

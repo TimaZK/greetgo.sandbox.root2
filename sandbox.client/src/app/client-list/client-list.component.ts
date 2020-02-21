@@ -34,7 +34,7 @@ export class ClientListComponent implements OnInit {
     this.pageFilter.pageSize = 5;
     this.pageFilter.pageNumber = 0;
     this.dataSource.data = this.listService.loadRecords();
-    // this.listService.loadClientRecords();
+    this.listService.loadClientRecords();
   }
 
   myFunk($event: PageEvent) {
