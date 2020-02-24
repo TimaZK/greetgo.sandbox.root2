@@ -6,6 +6,8 @@ import {Gender} from "../../model/Gender";
 import {PhoneType} from "../../model/PhoneType";
 import {AddressType} from "../../model/AddressType";
 import {Charm} from "../../model/Charm";
+import {Observable} from "rxjs";
+import {error} from "@angular/compiler/src/util";
 
 @Injectable({
   providedIn: 'root'
@@ -16,40 +18,38 @@ export class ClientListService {
   ) {
   }
 
-
-
-  loadClientRecords(): Promise<void> {
-    return this.http.get("/client/")
+  listClientDisplay(): Promise<ClientDisplay> {
+    return this.http.get("/client/list")
       .toPromise().then(x=> {
+        console.log(x.body);
+        return x.body;
       });
     /*.then(resp => resp.body as Array<any>)
       .then(body => body.map(r => PersonRecord.create(r)));*/
   }
 
-  findall(): Promise<ClientDisplay[]> {
-    return this.http.get("/client")
+  saveClient(client: ClientToSave) {
+    return this.http.post("/client/add", {clientToSave: JSON.stringify(client)})
       .toPromise().then(x=> x.body)
   }
-
-  saveClient(client: ClientToSave): Promise<string> {
-    return this.http.post("/client", {clientToSave: JSON.stringify(client)})
-      .toPromise().then(x=> x.body)
-  }
-
 
   deleteClient(id: string){
-    return this.http.delete("/client", {id: id})
+    return this.http.delete("/client/", {id: id})
       .toPromise().then(x=> {}).catch(error => error.error)
   }
 
-  getCharmList(){
-    return this.http.get("/charm")
-      .toPromise().then(x=> {}).catch(error => error.error)
+  getCharms(): Promise<Charm> {
+    return this.http.get("/client/charms")
+      .toPromise().then(x => {
+        console.log(x.body);
+        return x.body;
+      });
   }
 
-
-
-
+  getClient(id: string) {
+    return this.http.post("/client/edit", {id: id})
+      .toPromise().then(x => JSON.parse(x.body)).catch(error => error.error)
+  }
 
   loadRecords(): ClientDisplay[] {
     return  this.clientDispayArr;

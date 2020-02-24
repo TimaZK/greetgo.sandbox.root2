@@ -7,6 +7,7 @@ import {AddCustomerComponent} from "../add-customer/add-customer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ClientDisplay} from "../../model/ClientDisplay";
 import {PageFilter} from "../../model/PageFilter";
+import {ClientToSave} from "../../model/ClientToSave";
 
 @Component({
   selector: 'app-client-list',
@@ -34,7 +35,11 @@ export class ClientListComponent implements OnInit {
     this.pageFilter.pageSize = 5;
     this.pageFilter.pageNumber = 0;
     this.dataSource.data = this.listService.loadRecords();
-    this.listService.loadClientRecords();
+    this.listService.listClientDisplay();
+    this.listService.saveClient(new ClientToSave());
+    this.listService.deleteClient(this.listService.loadRecords()[0].id);
+    this.listService.getCharms();
+    this.listService.getClient("1");
   }
 
   myFunk($event: PageEvent) {
