@@ -29,26 +29,31 @@ export class ClientListService {
   }
 
   saveClient(client: ClientToSave) {
-    return this.http.post("/client/add", {clientToSave: JSON.stringify(client)})
+    return this.http.post("/client/save", {clientToSave: JSON.stringify(client)})
       .toPromise().then(x=> x.body)
   }
 
   deleteClient(id: string){
-    return this.http.delete("/client/", {id: id})
+    return this.http.delete("/client/delete/" + id, {id: id})
       .toPromise().then(x=> {}).catch(error => error.error)
   }
 
   getCharms(): Promise<Charm> {
-    return this.http.get("/client/charms")
+    return this.http.get("/client/charm")
       .toPromise().then(x => {
         console.log(x.body);
         return x.body;
       });
   }
 
-  getClient(id: string) {
-    return this.http.post("/client/edit", {id: id})
+  clientEdit(id: string) {
+    return this.http.post("/client/edit/" + id, {id: id})
       .toPromise().then(x => JSON.parse(x.body)).catch(error => error.error)
+  }
+
+  getClientDetail(id: string){
+    return this.http.get("/client/detail/" + id, {id: id})
+      .toPromise().then(x => {console.log(x.body)}).catch(error => error.error)
   }
 
   loadRecords(): ClientDisplay[] {
@@ -109,7 +114,7 @@ export class ClientListService {
     }
   ];
 
-  findBiIdinClientToSave(id) {
+  findByIdinClientToSave(id) {
     for (let i=0; i<this.clientArr.length; i++) {
       if(id == this.clientArr[i].id) {
         return this.clientArr[i];

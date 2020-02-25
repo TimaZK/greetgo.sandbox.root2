@@ -39,7 +39,8 @@ export class ClientListComponent implements OnInit {
     this.listService.saveClient(new ClientToSave());
     this.listService.deleteClient(this.listService.loadRecords()[0].id);
     this.listService.getCharms();
-    this.listService.getClient("1");
+    this.listService.clientEdit("1");
+    this.listService.getClientDetail("1");
   }
 
   myFunk($event: PageEvent) {

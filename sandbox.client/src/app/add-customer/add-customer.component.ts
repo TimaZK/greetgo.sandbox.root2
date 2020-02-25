@@ -64,7 +64,7 @@ export class AddCustomerComponent implements OnInit {
     });
 
     if (this.data) {
-      this.clientToSave = this.listService.findBiIdinClientToSave(this.data);
+      this.clientToSave = this.listService.findByIdinClientToSave(this.data);
       this.myFirstReactiveForm.patchValue({
 
         id: this.clientToSave.id,
@@ -147,88 +147,3 @@ export class AddCustomerComponent implements OnInit {
     this.dialogRef.close();
   }
 }
-
-
-
-
-
-
-//   initForm() {
-//     if (this.data) this.clientToSave = this.listService.findBiIdinClientToSave(this.data);
-//     console.log('this.clientToSave ', this.clientToSave);
-//     this.myFirstReactiveForm = this.fb.group({
-//       id: this.clientToSave.id || ([String(this.listService.clientArr.length+1)]),
-//       firstName: ([this.clientToSave.firstName || '', Validators.required]),
-//       lastName: ([this.clientToSave.lastName || '', Validators.required]),
-//       patron: ([this.clientToSave.patron || '', Validators.required]),
-//       gender: ([this.clientToSave.gender || Gender.MALE, Validators.required]),
-//       birthDay: ([this.clientToSave.birthDay || '', Validators.required]),
-//       charm: ([this.clientToSave.charm || '', Validators.required]),
-//       factAddress: this.fb.group({
-//         street: this.fb.control(['']),
-//         house: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-//         flat: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-//         type: this.fb.control([AddressType.FACT]),
-//       }),
-//       regAddress: this.fb.group({
-//         street: this.fb.control([this.clientToSave.regAddress.street || ''], Validators.required),
-//         house: this.fb.control([this.clientToSave.regAddress.house || ''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-//         flat: this.fb.control([this.clientToSave.regAddress.flat || ''], [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
-//         type: this.fb.control([this.clientToSave.regAddress.type || AddressType.REG]),
-//       }),
-//       phones: this.fb.array([
-//         this.fb.group({
-//           id: this.fb.control(['']),
-//           number: this.fb.control([''], Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
-//           type: this.fb.control([PhoneType.MOBILE], Validators.required),
-//         })
-//       ])
-//     });
-//
-//     if (this.clientToSave && this.clientToSave.phones && this.clientToSave.phones.length > 0) {
-//       this.clientToSave.phones.forEach((phone) => {
-//         let fg = this.fb.group(phone);
-//         this.phones.push(fg);
-//       });
-//     }
-//   }
-
-
-
-// if (this.data) {
-      //   this.clientToSave = this.listService.findBiIdinClientToSave(this.data);
-      //   this.myFirstReactiveForm.patchValue({
-      //
-      //     id: this.clientToSave.id,
-      //     firstName: this.clientToSave.firstName,
-      //     lastName: this.clientToSave.lastName,
-      //     patron: this.clientToSave.patron,
-      //     gender: this.clientToSave.gender,
-      //     birthDay: this.clientToSave.birthDay,
-      //     charm: this.clientToSave.charm,
-      //
-      //     factAddress: ({
-      //       street: this.clientToSave.factAddress.street,
-      //       house: this.clientToSave.factAddress.house,
-      //       flat: this.clientToSave.factAddress.flat,
-      //       type: AddressType.FACT,
-      //     }),
-      //
-      //     regAddress: ({
-      //       street: this.clientToSave.regAddress.street,
-      //       house: this.clientToSave.regAddress.house,
-      //       flat: this.clientToSave.regAddress.flat,
-      //       type: AddressType.REG,
-      //     }),
-      //   });
-      //   // this.clientToSave.phones.forEach((phone) => {
-      //   //   let fg = this.fb.group(phone);
-      //   //   this.phones.push(fg);
-      //   // })
-      //   if (this.clientToSave && this.clientToSave.phones && this.clientToSave.phones.length > 1) {
-      //     this.clientToSave.phones.forEach((phone) => {
-      //       let fg = this.fb.group(phone);
-      //       this.phones.push(fg);
-      //     });
-      //   }
-      // }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+  <changeSet author="pompei" id="create-table-for-client_1">
+    <sql endDelimiter=";;"><![CDATA[
+
+create table client
+(
+    id serial not null,
+    surname varchar(255),
+    name varchar,
+    patronymic varchar,
+    gender varchar,
+    birth_date date,
+    charm integer not null
+        constraint client_pk
+            primary key
+);
+
+alter table client owner to tzarlykov_sandbox;
+
+create unique index client_id_uindex
+    on client (id);
+
+
+create table client_addr
+(
+    client_id integer
+        constraint client_addr_client_id_fkey
+            references client (id),
+    type varchar not null,
+    street varchar,
+    house varchar,
+    flat varchar
+);
+
+alter table client_addr owner to tzarlykov_sandbox;
+
+
+create table client_phone
+(
+    client_id integer
+        constraint client_phone_client_id_fkey
+            references client (id),
+    number varchar not null,
+    type varchar
+);
+
+alter table client_phone owner to tzarlykov_sandbox;
+
+
+create table client_account
+(
+    id integer not null
+        constraint client_account_id_key
+            unique,
+    client_id integer
+        constraint client_account_client_id_fkey
+            references client (id),
+    money double precision,
+    number varchar,
+    registered_at timestamp
+);
+
+alter table client_account owner to tzarlykov_sandbox;
+
+
+create table charm_client
+(
+    id integer
+        constraint charm_client_id_fkey
+            references client,
+    name varchar,
+    description varchar,
+    energy double precision
+);
+
+alter table charm_client owner to tzarlykov_sandbox;
+
+
+create table transaction_type
+(
+    id serial not null
+        constraint transaction_type_pkey
+            primary key,
+    code varchar,
+    name varchar
+);
+
+alter table transaction_type owner to tzarlykov_sandbox;
+
+
+create table client_account_transaction
+(
+    id serial not null,
+    account integer
+        constraint client_account_transaction_account_fkey
+            references client_account (id),
+    money double precision,
+    finished_at timestamp,
+    type integer
+        constraint client_account_transaction_type_fkey
+            references transaction_type
+);
+
+alter table client_account_transaction owner to tzarlykov_sandbox;
+
+    ]]></sql>
+  </changeSet>
+
+
+
+</databaseChangeLog>
