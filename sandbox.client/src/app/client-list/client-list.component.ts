@@ -29,18 +29,18 @@ export class ClientListComponent implements OnInit {
   dataSource = new MatTableDataSource();
   private newClientDisplay: ClientDisplay;
   private pageFilter: PageFilter;
+  private clientToSave: ClientToSave;
 
-  ngOnInit() {
+  async ngOnInit() {
+    // debugger
     this.pageFilter = new PageFilter();
     this.pageFilter.pageSize = 5;
     this.pageFilter.pageNumber = 0;
-    this.dataSource.data = this.listService.loadRecords();
-    this.listService.listClientDisplay();
+    this.dataSource.data = await this.listService.listClientDisplay();
     this.listService.saveClient(new ClientToSave());
     this.listService.deleteClient(this.listService.loadRecords()[0].id);
     this.listService.getCharms();
     this.listService.clientEdit("1");
-    this.listService.getClientDetail("1");
   }
 
   myFunk($event: PageEvent) {
@@ -76,7 +76,7 @@ export class ClientListComponent implements OnInit {
         if (res == null) {
           return;
         }
-        if (res.id > this.listService.clientArr.length) {
+        if (res.id > this.listService.listClientDisplay.length) {
           this.newClientDisplay = new ClientDisplay();
           this.newClientDisplay.id = res.id;
           this.newClientDisplay.fio = res.firstName + " " + res.lastName;
@@ -92,11 +92,25 @@ export class ClientListComponent implements OnInit {
           this.newClientDisplay.maximumBalance = 0;
           this.newClientDisplay.minimumBalance = 0;
 
+          // @ts-ignore
           this.dataSource.data.unshift(this.newClientDisplay);
-          this.listService.clientArr.push(res);
+
+          this.clientToSave = new ClientToSave();
+          this.clientToSave.id = res.id;
+          this.clientToSave.firstName = res.firstName;
+          this.clientToSave.lastName = res.lastName;
+          this.clientToSave.patron = res.patron;
+          this.clientToSave.birthDay = res.birthDay;
+          this.clientToSave.gender = res.gender;
+          this.clientToSave.charm = res.charm;
+          this.clientToSave.factAddress = res.factAddress;
+          this.clientToSave.regAddress = res.regAddress;
+          this.clientToSave.phones = res.phones;
+
+          this.listService.saveClient(this.clientToSave);
+          // @ts-ignore
           this.dataSource.data = [...this.dataSource.data];
-          console.log(this.listService.clientArr);
-          console.log(this.listService.loadRecords());
+          console.log(this.listService.listClientDisplay());
 
         } else {
           for (let i=0; i<this.listService.clientArr.length; i++) {
@@ -118,6 +132,7 @@ export class ClientListComponent implements OnInit {
   }
 
   openDialogDelete(id) {
+    // @ts-ignore
     this.dataSource.data = this.dataSource.data.filter((value:any) => value.id!=id);
   }
 

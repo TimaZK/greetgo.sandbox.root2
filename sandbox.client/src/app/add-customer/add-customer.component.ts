@@ -7,6 +7,7 @@ import {PhoneType} from "../../model/PhoneType";
 import {ClientListService} from "../services/client-list.service";
 import {ClientListComponent} from "../client-list/client-list.component";
 import {AddressType} from "../../model/AddressType";
+import {ClientToEdit} from "../../model/ClientToEdit";
 
 @Component({
   selector: 'app-add-customer',
@@ -18,25 +19,25 @@ export class AddCustomerComponent implements OnInit {
 
   myFirstReactiveForm: FormGroup;
 
-  private clientToSave = new ClientToSave();
+  private clientToEdit = new ClientToEdit();
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ClientListComponent>,
     public listService: ClientListService,
-    @Inject (MAT_DIALOG_DATA) public data: ClientToSave
+    @Inject(MAT_DIALOG_DATA) public data: string
   ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     // debugger
-    this.initForm();
+    await this.initForm();
   }
 
-  initForm() {
+  async initForm() {
     this.myFirstReactiveForm = this.fb.group({
 
-      id: ([String(this.listService.clientArr.length+1)]),
+      id: ([String(this.listService.loadRecords().length + 1)]),
       firstName: (['', Validators.required]),
       lastName: (['', Validators.required]),
       patron: (['', Validators.required]),
@@ -64,36 +65,37 @@ export class AddCustomerComponent implements OnInit {
     });
 
     if (this.data) {
-      this.clientToSave = this.listService.findByIdinClientToSave(this.data);
+      this.clientToEdit = await this.listService.clientEdit(this.data);
+      console.log(this.clientToEdit);
       this.myFirstReactiveForm.patchValue({
 
-        id: this.clientToSave.id,
-        firstName: this.clientToSave.firstName,
-        lastName: this.clientToSave.lastName,
-        patron: this.clientToSave.patron,
-        gender: this.clientToSave.gender,
-        birthDay: this.clientToSave.birthDay,
-        charm: this.clientToSave.charm,
+        id: this.clientToEdit.id,
+        firstName: this.clientToEdit.firstName,
+        lastName: this.clientToEdit.lastName,
+        patron: this.clientToEdit.patron,
+        gender: this.clientToEdit.gender,
+        birthDay: this.clientToEdit.birthDay,
+        charm: this.clientToEdit.charm,
 
         factAddress: ({
-          street: this.clientToSave.factAddress.street,
-          house: this.clientToSave.factAddress.house,
-          flat: this.clientToSave.factAddress.flat,
+          street: this.clientToEdit.factAddress.street,
+          house: this.clientToEdit.factAddress.house,
+          flat: this.clientToEdit.factAddress.flat,
           type: AddressType.FACT,
         }),
 
         regAddress: ({
-          street: this.clientToSave.regAddress.street,
-          house: this.clientToSave.regAddress.house,
-          flat: this.clientToSave.regAddress.flat,
+          street: this.clientToEdit.regAddress.street,
+          house: this.clientToEdit.regAddress.house,
+          flat: this.clientToEdit.regAddress.flat,
           type: AddressType.REG,
         }),
       });
-      if (this.clientToSave && this.clientToSave.phones && this.clientToSave.phones.length > 0) {
-        for (let i=0; i<this.clientToSave.phones.length; i++) {
+      if (this.clientToEdit && this.clientToEdit.phones && this.clientToEdit.phones.length > 0) {
+        for (let i = 0; i < this.clientToEdit.phones.length; i++) {
           this.phones.removeAt(i);
         }
-        this.clientToSave.phones.forEach((phone) => {
+        this.clientToEdit.phones.forEach((phone) => {
           let fg = this.fb.group(phone);
           this.phones.push(fg);
         });
@@ -113,7 +115,7 @@ export class AddCustomerComponent implements OnInit {
   }
 
   deletePhoneField(index: number) {
-    if(this.phones.length!==1) {
+    if (this.phones.length !== 1) {
       this.phones.removeAt(index);
     }
     console.log(this.phones.length);

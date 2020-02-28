@@ -20,6 +20,7 @@ public class DbLoader {
   public BeanGetter<AuthTestDao> authTestDao;
   public BeanGetter<IdGenerator> idGenerator;
   public BeanGetter<PasswordEncoder> passwordEncoder;
+//  public BeanGetter<>
 
   public void loadTestData() throws Exception {
 
@@ -46,6 +47,9 @@ public class DbLoader {
     add_can("stalin", UserCan.VIEW_USERS);
     add_can("stalin", UserCan.VIEW_ABOUT);
 
+//    for (int i = 0; i < 100; i++) {
+////      authTestDao.get().insertPerson(id, accountName, encryptPassword);Z
+//    }
     logger.info("Finish loading persons");
   }
 

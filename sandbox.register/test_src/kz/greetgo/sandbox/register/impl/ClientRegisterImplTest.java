@@ -20,5 +20,4 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ClientRegisterImplTest extends ParentTestNg {
 
-  
 }

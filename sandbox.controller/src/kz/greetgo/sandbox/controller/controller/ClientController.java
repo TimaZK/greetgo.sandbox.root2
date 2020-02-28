@@ -9,14 +9,13 @@ import kz.greetgo.mvc.annotations.on_methods.ControllerPrefix;
 import kz.greetgo.mvc.annotations.on_methods.OnDelete;
 import kz.greetgo.mvc.annotations.on_methods.OnGet;
 import kz.greetgo.mvc.annotations.on_methods.OnPost;
-import kz.greetgo.sandbox.controller.model.Charm;
-import kz.greetgo.sandbox.controller.model.ClientDisplay;
-import kz.greetgo.sandbox.controller.model.ClientToSave;
+import kz.greetgo.sandbox.controller.model.*;
 import kz.greetgo.sandbox.controller.register.ClientRegister;
 import kz.greetgo.sandbox.controller.security.PublicAccess;
 import kz.greetgo.sandbox.controller.util.Controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,13 +29,22 @@ public class ClientController implements Controller{
   @ToJson
   @OnGet("/list")
   public List<ClientDisplay> list() {
-    ClientDisplay client = new ClientDisplay();
-    client.fio = "Tima Zarlykov";
-    List<ClientDisplay> clientDisplays = new ArrayList<>();
-    clientDisplays.add(client);
+//    ClientDisplay client = new ClientDisplay();
+//    ClientDisplay client1 = new ClientDisplay();
+//    client1.fio = "Blaaaa";
+//    client1.id = "2";
+//    client.id = "1";
+//    client.fio = "Tima Zarlykov";
+//    client.age = 20;
+//    client.character = "RUDE";
+//    client.totalBalanceOfAccounts = 0;
+//    client.maximumBalance = 0;
+//    client.minimumBalance = 0;
+//    List<ClientDisplay> clientDisplays = new ArrayList<>();
+//    clientDisplays.add(client);
+//    clientDisplays.add(client1);
 
-//    clientRegister.get().getClientDisplayList();
-    return clientDisplays;
+    return clientRegister.get().list();
   }
 
   @PublicAccess
@@ -65,18 +73,16 @@ public class ClientController implements Controller{
   @ToJson
   @PublicAccess
   @OnPost("/edit/{id}")
-  public ClientToSave clientToSave(@Par("id") String id) {
-    ClientToSave clientToSave = new ClientToSave();
-    clientToSave.setFirstName("Tima");
-    System.out.println(clientToSave);
-    return clientToSave;
-  }
-
-  @ToJson
-  @OnGet("/detail/{id}")
-  public ClientDisplay clientDisplay(@Par("id") String id) {
-    System.out.println(id);
-    return new ClientDisplay();
+  public ClientToEdit clientToEdit(@Par("id") String id) {
+    ClientToEdit clientToEdit = new ClientToEdit();
+    clientToEdit.setId("1");
+    clientToEdit.setFirstName("Tima");
+    clientToEdit.setLastName("Zarlykov");
+    clientToEdit.setBirthDay(new Date());
+    clientToEdit.setRegAddress(new Address());
+    clientToEdit.setFactAddress(new Address());
+    System.out.println(clientToEdit.firstName);
+    return clientToEdit;
   }
 
 }

@@ -8,6 +8,7 @@ import {AddressType} from "../../model/AddressType";
 import {Charm} from "../../model/Charm";
 import {Observable} from "rxjs";
 import {error} from "@angular/compiler/src/util";
+import {ClientToEdit} from "../../model/ClientToEdit";
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,9 @@ export class ClientListService {
   ) {
   }
 
-  listClientDisplay(): Promise<ClientDisplay> {
+  listClientDisplay(): Promise<ClientDisplay[]> {
     return this.http.get("/client/list")
       .toPromise().then(x=> {
-        console.log(x.body);
         return x.body;
       });
     /*.then(resp => resp.body as Array<any>)
@@ -30,7 +30,7 @@ export class ClientListService {
 
   saveClient(client: ClientToSave) {
     return this.http.post("/client/save", {clientToSave: JSON.stringify(client)})
-      .toPromise().then(x=> x.body)
+      .toPromise().then(x=> {})
   }
 
   deleteClient(id: string){
@@ -41,23 +41,17 @@ export class ClientListService {
   getCharms(): Promise<Charm> {
     return this.http.get("/client/charm")
       .toPromise().then(x => {
-        console.log(x.body);
         return x.body;
       });
   }
 
-  clientEdit(id: string) {
+  clientEdit(id: string):Promise<ClientToEdit> {
     return this.http.post("/client/edit/" + id, {id: id})
-      .toPromise().then(x => JSON.parse(x.body)).catch(error => error.error)
-  }
-
-  getClientDetail(id: string){
-    return this.http.get("/client/detail/" + id, {id: id})
-      .toPromise().then(x => {console.log(x.body)}).catch(error => error.error)
+      .toPromise().then(x => x.body).catch(error => error.error);
   }
 
   loadRecords(): ClientDisplay[] {
-    return  this.clientDispayArr;
+    return this.clientDispayArr;
   }
 
   charms: Charm[] = [
@@ -114,11 +108,4 @@ export class ClientListService {
     }
   ];
 
-  findByIdinClientToSave(id) {
-    for (let i=0; i<this.clientArr.length; i++) {
-      if(id == this.clientArr[i].id) {
-        return this.clientArr[i];
-      }
-    }
-  }
 }

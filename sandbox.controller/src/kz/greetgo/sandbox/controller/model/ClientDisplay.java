@@ -4,8 +4,8 @@ public class ClientDisplay {
   public String id;
   public String fio;
   public String character;
-  public int age;
-  public int totalBalanceOfAccounts;
-  public int maximumBalance;
-  public int minimumBalance;
+  public Integer age;
+  public Integer totalBalanceOfAccounts;
+  public Integer maximumBalance;
+  public Integer minimumBalance;
 }
