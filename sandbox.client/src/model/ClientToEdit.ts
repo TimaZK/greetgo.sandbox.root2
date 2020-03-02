@@ -1,6 +1,6 @@
-import {Gender} from "./Gender";
-import {Address} from "./Address";
-import {Phones} from "./Phones";
+import {Gender} from './Gender';
+import {Address} from './Address';
+import {Phones} from './Phones';
 
 export class ClientToEdit {
   public id: string;

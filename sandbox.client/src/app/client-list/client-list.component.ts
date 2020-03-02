@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
-import {ClientListService} from "../services/client-list.service";
-import {AddCustomerComponent} from "../add-customer/add-customer.component";
+import {ClientListService} from '../services/client-list.service';
+import {AddCustomerComponent} from '../add-customer/add-customer.component';
 import {MatDialog} from "@angular/material/dialog";
 import {ClientDisplay} from "../../model/ClientDisplay";
 import {PageFilter} from "../../model/PageFilter";
@@ -36,6 +36,7 @@ export class ClientListComponent implements OnInit {
     this.pageFilter = new PageFilter();
     this.pageFilter.pageSize = 5;
     this.pageFilter.pageNumber = 0;
+    // @ts-ignore
     this.dataSource.data = await this.listService.listClientDisplay();
     this.listService.saveClient(new ClientToSave());
     this.listService.deleteClient(this.listService.loadRecords()[0].id);
@@ -79,10 +80,12 @@ export class ClientListComponent implements OnInit {
         if (res.id > this.listService.listClientDisplay.length) {
           this.newClientDisplay = new ClientDisplay();
           this.newClientDisplay.id = res.id;
-          this.newClientDisplay.fio = res.firstName + " " + res.lastName;
+          this.newClientDisplay.fio = res.firstName + ' ' + res.lastName;
           this.newClientDisplay.age = 0;
+          // tslint:disable-next-line:triple-equals
           if (res.charm == 1) {
             this.newClientDisplay.character = this.listService.charms[0].name;
+            // tslint:disable-next-line:triple-equals
           } else if (res.charm == 2) {
             this.newClientDisplay.character = this.listService.charms[1].name;
           } else {
@@ -110,10 +113,9 @@ export class ClientListComponent implements OnInit {
           this.listService.saveClient(this.clientToSave);
           // @ts-ignore
           this.dataSource.data = [...this.dataSource.data];
-          console.log(this.listService.listClientDisplay());
 
         } else {
-          for (let i=0; i<this.listService.clientArr.length; i++) {
+          for (let i = 0; i < this.listService.clientArr.length; i++) {
             if (this.listService.clientArr[i].id === res.id) {
               this.listService.clientArr[i].firstName = res.firstName;
               this.listService.clientArr[i].lastName = res.lastName;
@@ -128,12 +130,13 @@ export class ClientListComponent implements OnInit {
           }
         }
       }
-    )
+    );
   }
 
   openDialogDelete(id) {
     // @ts-ignore
-    this.dataSource.data = this.dataSource.data.filter((value:any) => value.id!=id);
+    // tslint:disable-next-line:triple-equals
+    this.dataSource.data = this.dataSource.data.filter((value: any) => value.id!=id);
   }
 
   openDialogUpdate(id: ClientDisplay) {

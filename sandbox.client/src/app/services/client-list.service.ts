@@ -6,9 +6,8 @@ import {Gender} from "../../model/Gender";
 import {PhoneType} from "../../model/PhoneType";
 import {AddressType} from "../../model/AddressType";
 import {Charm} from "../../model/Charm";
-import {Observable} from "rxjs";
-import {error} from "@angular/compiler/src/util";
 import {ClientToEdit} from "../../model/ClientToEdit";
+import {PageFilter} from "../../model/PageFilter";
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +18,11 @@ export class ClientListService {
   ) {
   }
 
-  listClientDisplay(): Promise<ClientDisplay[]> {
+  listClientDisplay(pageFilter: PageFilter): Promise<ClientDisplay[]> {
     return this.http.get("/client/list")
       .toPromise().then(x=> {
         return x.body;
       });
-    /*.then(resp => resp.body as Array<any>)
-      .then(body => body.map(r => PersonRecord.create(r)));*/
   }
 
   saveClient(client: ClientToSave) {
@@ -38,14 +35,14 @@ export class ClientListService {
       .toPromise().then(x=> {}).catch(error => error.error)
   }
 
-  getCharms(): Promise<Charm> {
+  getCharms(): Promise<Charm[]> {
     return this.http.get("/client/charm")
       .toPromise().then(x => {
         return x.body;
       });
   }
 
-  clientEdit(id: string):Promise<ClientToEdit> {
+  clientEdit(id: string): Promise<ClientToEdit> {
     return this.http.post("/client/edit/" + id, {id: id})
       .toPromise().then(x => x.body).catch(error => error.error);
   }
@@ -73,8 +70,8 @@ export class ClientListService {
   // @ts-ignore
   clientArr: ClientToSave[] = [
     {id: "1", firstName: "Tima", lastName: "Zarlykov", patron: "Kairatovic", charm: "1", gender: Gender.FEMALE, birthDay: new Date(),
-    factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
-    phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}, {id: "2", number: "564563456", type: PhoneType.FAX}]
+      factAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.FACT}, regAddress: {street: "eafwe", house: "23423", flat: "4234", type: AddressType.REG},
+      phones: [{id: "1", number: "4123421", type: PhoneType.MOBILE}, {id: "2", number: "564563456", type: PhoneType.FAX}]
     },
 
     {id: "2", firstName: "Bima", lastName: "Narlykov", patron: "Kairatovic", charm: "1", gender: Gender.MALE, birthDay: new Date(),

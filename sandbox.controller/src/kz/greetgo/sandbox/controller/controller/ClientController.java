@@ -28,28 +28,14 @@ public class ClientController implements Controller{
 
   @ToJson
   @OnGet("/list")
-  public List<ClientDisplay> list() {
-//    ClientDisplay client = new ClientDisplay();
-//    ClientDisplay client1 = new ClientDisplay();
-//    client1.fio = "Blaaaa";
-//    client1.id = "2";
-//    client.id = "1";
-//    client.fio = "Tima Zarlykov";
-//    client.age = 20;
-//    client.character = "RUDE";
-//    client.totalBalanceOfAccounts = 0;
-//    client.maximumBalance = 0;
-//    client.minimumBalance = 0;
-//    List<ClientDisplay> clientDisplays = new ArrayList<>();
-//    clientDisplays.add(client);
-//    clientDisplays.add(client1);
-
-    return clientRegister.get().list();
+  public List<ClientDisplay> list(@Par("pageFilter") @Json PageFilter pageFilter) {
+    return clientRegister.get().list(pageFilter);
   }
 
   @PublicAccess
   @OnPost("/save")
   public void save(@Par("clientToSave") @Json ClientToSave client){
+    client.firstName = "Tima";
     System.out.println(client);
   }
 
