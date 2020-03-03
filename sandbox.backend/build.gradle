@@ -1,0 +1,28 @@
+sourceSets.main.java.srcDirs = ["src", "nf36_gen_src"]
+
+dependencies {
+  implementation('org.springframework.boot:spring-boot-starter')
+  implementation('org.springframework.boot:spring-boot-starter-web')
+  testImplementation('org.springframework.boot:spring-boot-starter-test')
+  testImplementation('org.springframework.boot:spring-boot-starter-logging')
+
+  compile("org.springframework:spring-jdbc")
+
+  compile "org.postgresql:postgresql:42.2.5"
+  compile "com.zaxxer:HikariCP:3.1.0"
+  compile "org.liquibase:liquibase-core:3.5.1"
+  compile 'org.mybatis:mybatis-spring:1.3.2'
+  compile 'org.mybatis:mybatis:3.4.6'
+  compile 'kz.greetgo.util:greetgo.util:0.1.0'
+
+  compile "kz.greetgo.db:greetgo.nf36:$greetgoDbVersion"
+  testCompile "kz.greetgo.db:greetgo.nf36.gen:$greetgoDbVersion"
+
+  compile "kz.greetgo.conf:greetgo.conf:$greetgoConfVersion"
+  testCompile "kz.greetgo.conf:greetgo.sys_params:$greetgoConfVersion"
+}
+
+task asd(type: JavaExec) {
+  main = "kz.greetgo.sandbox.backend.test.util.Modules"
+  classpath = sourceSets.test.runtimeClasspath
+}
