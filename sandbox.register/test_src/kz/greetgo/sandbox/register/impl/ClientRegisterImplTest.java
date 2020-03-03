@@ -27,22 +27,12 @@ public class ClientRegisterImplTest extends ParentTestNg {
     clientTestDao.get().deleteAll();
   }
 
-  private static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
-  private static final SecureRandom RANDOM = new SecureRandom();
-
-  public static String generate(int count) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < count; ++i) {
-      sb.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
-    }
-    return sb.toString();
-  }
 
   @Test
   public void sortWithIdAsc() {
 
     List<ClientDisplay> clientDisplaysArr = new ArrayList<>();
-    for (int i=1; i<101; i++) {
+    for (int i = 1; i < 101; i++) {
 
       String id = Integer.toString(i);
       String surname = generate(10);
@@ -63,7 +53,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
 
     PageFilter pageFilter = new PageFilter("", "id", "asc", 100, 0);
 
-    for (int i=0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
       assertThat(clientDisplaysArr.get(i).id).isEqualTo(clientRegister.get().list(pageFilter).get(i).id);
     }
 
@@ -74,7 +64,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
   public void sortWithIdDesc() {
 
     List<ClientDisplay> clientDisplaysArr = new ArrayList<>();
-    for (int i=1; i<101; i++) {
+    for (int i = 1; i < 101; i++) {
 
       String id = Integer.toString(i);
       String surname = generate(10);
@@ -95,7 +85,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
 
     PageFilter pageFilter = new PageFilter("", "id", "desc", 100, 0);
 
-    for (int i=0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
       assertThat(clientDisplaysArr.get(i).id).isEqualTo(clientRegister.get().list(pageFilter).get(i).id);
     }
 
@@ -106,7 +96,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
   public void sortWithFioAsc() {
 
     List<ClientDisplay> clientDisplaysArr = new ArrayList<>();
-    for (int i=1; i<101; i++) {
+    for (int i = 1; i < 101; i++) {
 
       String id = Integer.toString(i);
       String surname = generate(10);
@@ -127,7 +117,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
 
     PageFilter pageFilter = new PageFilter("", "fio", "asc", 100, 0);
 
-    for (int i=0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
       assertThat(clientDisplaysArr.get(i).fio).isEqualTo(clientRegister.get().list(pageFilter).get(i).fio);
     }
   }
@@ -137,7 +127,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
   public void sortWithFioDesc() {
 
     List<ClientDisplay> clientDisplaysArr = new ArrayList<>();
-    for (int i=1; i<101; i++) {
+    for (int i = 1; i < 101; i++) {
 
       String id = Integer.toString(i);
       String surname = generate(10);
@@ -158,7 +148,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
 
     PageFilter pageFilter = new PageFilter("", "fio", "asc", 100, 0);
 
-    for (int i=0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
       assertThat(clientDisplaysArr.get(i).fio).isEqualTo(clientRegister.get().list(pageFilter).get(i).fio);
     }
   }
@@ -168,7 +158,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
   public void filterNameValueTest() {
 
     List<ClientDisplay> clientDisplaysArr = new ArrayList<>();
-    for (int i=1; i<101; i++) {
+    for (int i = 1; i < 101; i++) {
 
       String id = Integer.toString(i);
       String surname = generate(10);
@@ -189,7 +179,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
 
     PageFilter pageFilter = new PageFilter("blaaa", "", "", 100, 0);
 
-    for (int i=0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
       assertThat(clientRegister.get().list(pageFilter).get(i).fio).isEqualTo(clientDisplaysArr.get(i).fio);
     }
   }
@@ -198,6 +188,18 @@ public class ClientRegisterImplTest extends ParentTestNg {
   @Test
   public void clientWithNullValueTest() {
     clientRegister.get().saveClient(null);
+  }
+
+
+  private static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+  private static final SecureRandom RANDOM = new SecureRandom();
+
+  public static String generate(int count) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < count; ++i) {
+      sb.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
+    }
+    return sb.toString();
   }
 
 }
