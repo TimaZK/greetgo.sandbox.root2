@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface ClientDao {
-  @Select("select surname||' '||name||' '||patronymic as fio " +
+  @Select("select client.id, surname||' '||name||' '||patronymic as fio " +
     "from Client inner join client_account on client.id = client_account.client")
   List<ClientDisplay> list();
 
@@ -24,7 +24,7 @@ public interface ClientDao {
   void saveClient(@Param("client") ClientToSave client
   );
 
-  @Select("update client set surname = #{client.lastName}, name = #{client.firstName}, patronymic = #{client.patron},"
-    + "gender = #{client.gender}, birth_date = #{client.birthDay}, charm = #{client.charm} where id = #{client.id}")
-  Boolean updateClient(@Param("client") ClientToSave client);
+//  @Select("update client set surname = #{client.lastName}, name = #{client.firstName}, patronymic = #{client.patron},"
+//    + "gender = #{client.gender}, birth_date = #{client.birthDay}, charm = #{client.charm} where id = #{client.id}")
+//  Boolean updateClient(@Param("client") ClientToSave client);
 }

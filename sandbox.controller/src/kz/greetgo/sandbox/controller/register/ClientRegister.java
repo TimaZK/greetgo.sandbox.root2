@@ -15,5 +15,5 @@ public interface ClientRegister {
 
   void saveClient(ClientToSave clientToSave);
 
-  Boolean updateClient(ClientToSave detail);
+//  Boolean updateClient(ClientToSave detail);
 }

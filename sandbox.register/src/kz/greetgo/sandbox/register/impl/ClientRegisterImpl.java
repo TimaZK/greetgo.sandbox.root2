@@ -30,10 +30,10 @@ public class ClientRegisterImpl implements ClientRegister {
     clientDao.get().saveClient(client);
   }
 
-  @Override
-  public Boolean updateClient(ClientToSave detail) {
-    return clientDao.get().updateClient(detail);
-  }
+//  @Override
+//  public Boolean updateClient(ClientToSave detail) {
+//    return clientDao.get().updateClient(detail);
+//  }
 
 
 }
