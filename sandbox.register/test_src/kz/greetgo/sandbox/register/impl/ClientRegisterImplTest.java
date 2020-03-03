@@ -90,7 +90,7 @@ public class ClientRegisterImplTest extends ParentTestNg {
     }
 
   }
-
+ 
 
   @Test
   public void sortWithFioAsc() {
